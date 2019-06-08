@@ -1,23 +1,22 @@
 const path = require('path');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
 
-  entry: {
-
-  },
+  entry: './src/js/app.jsx',
 
   devServer: {
-    contentBase: path.join(__dirname, 'build'),
+    contentBase: path.join(__dirname, 'public'),
     port: 3000,
     watchContentBase: true,
     writeToDisk: true,
   },
 
   output: {
-    filename: '[name].bundle.js',
-    publicPath: makeAbsolutePath('build'),
-    path: makeAbsolutePath('build'),
+    filename: 'app.bundle.js',
+    publicPath: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'public'),
   },
 
   optimization: {
@@ -26,21 +25,24 @@ module.exports = {
 
   devtool: 'source-map',
 
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json']
-  },
-
   module: {
     rules: [
-      {
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
-        exclude: makeAbsolutePath('node_modules'),
-      },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.jsx?/,
+        exclude: /node_modules/,
+        use: 'babel-loader',
+      }
     ],
   },
+
+  plugins: [
+    new HTMLWebpackPlugin({
+      title: 'Snake the game',
+      template: 'index.ejs'
+    }),
+  ],
 };
