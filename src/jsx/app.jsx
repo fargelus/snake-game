@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Grid from './components/grid.jsx';
+import Game from './components/game.jsx';
 
 ReactDOM.render(
-  <Grid w="640" h="480" cellSize="20"/>,
+  <Game w="640" h="480"/>,
   document.getElementById('app')
 );

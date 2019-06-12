@@ -9,6 +9,7 @@ class Grid extends React.Component {
     this.width = +this.props.width || 640;
     this.height = +this.props.height || 480;
     this.cellSize = +this.props.cellSize || 20;
+    this.figures = this.props.figures || [];
 
     this.attrs = Object.assign({}, this.props);
     this.removeCustomAttrs();
@@ -53,6 +54,7 @@ class Grid extends React.Component {
     this.setupContext();
     this.drawVerticalLines();
     this.drawHorizontalLines();
+    this.drawFigures();
   }
 
   setupContext() {
@@ -85,6 +87,17 @@ class Grid extends React.Component {
     }
     this.ctx.stroke(); // Последняя линия
     this.ctx.closePath();
+  }
+
+  drawFigures() {
+    if (!this.figures.length) return;
+
+    this.figures.forEach((figure) => {
+      const { x, y, color } = figure;
+      const { ctx, cellSize } = this;
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, cellSize, cellSize);
+    });
   }
 
   render() {
