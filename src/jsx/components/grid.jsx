@@ -8,8 +8,8 @@ class Grid extends React.Component {
     this._width = +this.props.w;
     this._height = +this.props.h;
     this._cellSize = +this.props.cellSize;
-
     this._figures;
+    
     this._attrs;
     this._setupAttrs();
   }

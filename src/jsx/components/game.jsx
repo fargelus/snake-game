@@ -23,6 +23,13 @@ class Game extends React.Component {
 
     this._gridProps;
     this._initGridProps();
+
+    this._style = {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+    };
   }
 
   _initSnake() {
@@ -49,12 +56,6 @@ class Game extends React.Component {
       w: this._width,
       h: this._height,
       cellSize: this._cellSize,
-      style: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-      },
     };
   }
 
@@ -67,7 +68,7 @@ class Game extends React.Component {
     };
     Object.assign(this._gridProps, fillParts);
 
-    return (<section>
+    return (<section style={this._style}>
                 <Grid {...this._gridProps}/>
             </section>);
   }
