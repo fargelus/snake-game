@@ -8,8 +8,9 @@ class Grid extends React.Component {
     this._width = +this.props.w;
     this._height = +this.props.h;
     this._cellSize = +this.props.cellSize;
+    this._prevFigures;
     this._figures;
-    
+
     this._attrs;
     this._setupAttrs();
   }
@@ -95,19 +96,46 @@ class Grid extends React.Component {
   }
 
   _drawFigures() {
-    this._initFigures();
+    this._updateFigures();
     if (!this._figures.length) return;
 
+    this._resetPrevFiguresIfItExist();
     this._figures.forEach((figure) => {
       const { coords, color } = figure;
       const { _ctx, _cellSize } = this;
       _ctx.fillStyle = color;
-      _ctx.fillRect(coords.x, coords.y, _cellSize, _cellSize);
+      const rectCoords = this._getRectCoords(coords.x, coords.y, _cellSize);
+      _ctx.fillRect(...rectCoords);
     });
+  }
+
+  _updateFigures() {
+    this._saveOldFigures();
+    this._initFigures();
+  }
+
+  _saveOldFigures() {
+    const isArray = Array.isArray;
+    this._prevFigures = isArray(this._figures) ? this._figures.slice() : [];
   }
 
   _initFigures() {
     this._figures = this._attrs.figures || [];
+  }
+
+  _resetPrevFiguresIfItExist() {
+    if (!this._prevFigures.length) return;
+
+    this._prevFigures.forEach((prevFigure) => {
+      const { coords } = prevFigure;
+      const { _ctx, _cellSize } = this;
+      const rectCoords = this._getRectCoords(coords.x, coords.y, _cellSize);
+      _ctx.clearRect(...rectCoords);
+    });
+  }
+
+  _getRectCoords(x, y, size) {
+    return [x + 1, y + 1, size - 2, size - 2 ];
   }
 
   shouldComponentUpdate(newProps) {
