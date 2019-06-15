@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Grid from './grid.jsx';
 import Snake from '../../js/snake.js';
 
@@ -17,7 +16,7 @@ class Game extends React.Component {
         y: this._height/2,
       },
     };
-    
+
     this._snake;
     this._moveSnake = this._moveSnake.bind(this);
     this._initSnake();
