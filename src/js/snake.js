@@ -1,7 +1,9 @@
-class Snake {
+import Point from './point.js';
+
+class Snake extends Point {
   constructor(settings) {
-    this._startX = settings.initX;
-    this._startY = settings.initY;
+    super(settings.x, settings.y);
+    
     this._moveShift = settings.moveShift;
     this._emitMove = settings.onMove;
     this._length = 1;
@@ -51,27 +53,19 @@ class Snake {
   }
 
   _moveLeft() {
-    this._startX -= this._moveShift;
+    this._x -= this._moveShift;
   }
 
   _moveUp() {
-    this._startY -= this._moveShift;
+    this._y -= this._moveShift;
   }
 
   _moveRight() {
-    this._startX += this._moveShift;
+    this._x += this._moveShift;
   }
 
   _moveDown() {
-    this._startY += this._moveShift;
-  }
-
-  getStartX() {
-    return this._startX;
-  }
-
-  getStartY() {
-    return this._startY;
+    this._y += this._moveShift;
   }
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from './grid.jsx';
 import Snake from '../../js/snake.js';
+import Food from '../../js/food.js';
 
 class Game extends React.Component {
   constructor(props) {
@@ -10,15 +11,23 @@ class Game extends React.Component {
     this._height = props.h || 480;
     this._cellSize = 20;
 
+    this._snake;
+    this._moveSnake = this._moveSnake.bind(this);
+
+    this._food = new Food(this._width, this._height);
+    const [foodX, foodY] = this._getFoodCoordsConsiderCellSize();
+
     this.state = {
       snake: {
         x: this._width/2,
         y: this._height/2,
       },
+      food: {
+        x: foodX,
+        y: foodY,
+      },
     };
 
-    this._snake;
-    this._moveSnake = this._moveSnake.bind(this);
     this._initSnake();
 
     this._gridProps;
@@ -32,10 +41,24 @@ class Game extends React.Component {
     };
   }
 
+  _getFoodCoordsConsiderCellSize() {
+    const coordX = this._food.getX();
+    const foodX = this._roundByCellSize(coordX);
+
+    const coordY = this._food.getY();
+    const foodY = this._roundByCellSize(coordY);
+
+    return [ foodX, foodY ];
+  }
+
+  _roundByCellSize(val) {
+    return Math.floor(val / this._cellSize) * this._cellSize;
+  }
+
   _initSnake() {
     const snakeSettings = {
-      initX: this.state.snake.x,
-      initY: this.state.snake.y,
+      x: this.state.snake.x,
+      y: this.state.snake.y,
       moveShift: this._cellSize,
       onMove: this._moveSnake,
     };
@@ -45,8 +68,8 @@ class Game extends React.Component {
   _moveSnake() {
     this.setState({
       snake: {
-        x: this._snake.getStartX(),
-        y: this._snake.getStartY(),
+        x: this._snake.getX(),
+        y: this._snake.getY(),
       },
     });
   }
@@ -60,17 +83,27 @@ class Game extends React.Component {
   }
 
   render() {
-    const fillParts = {
-      figures: [{
-        coords: this.state.snake,
-        color: '#f00',
-      }],
-    };
-    Object.assign(this._gridProps, fillParts);
+    this._updateGridPropsByFigures();
 
     return (<section style={this._style}>
                 <Grid {...this._gridProps}/>
             </section>);
+  }
+
+  _updateGridPropsByFigures() {
+    const figuresCont = {
+      figures: [
+        {
+          coords: this.state.snake,
+          color: '#f00',
+        },
+        {
+          coords: this.state.food,
+          color: '#663399',
+        }
+      ],
+    };
+    Object.assign(this._gridProps, figuresCont);
   }
 }
 
