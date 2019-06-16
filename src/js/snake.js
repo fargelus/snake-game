@@ -3,12 +3,13 @@ import Point from './point.js';
 class Snake extends Point {
   constructor(settings) {
     super(settings.x, settings.y);
-    
-    this._moveShift = settings.moveShift;
+
+    this._shift = settings.shift;
     this._emitMove = settings.onMove;
     this._length = 1;
 
     this._handleArrowsPressed();
+    this._moveIntervalID;
   }
 
   _handleArrowsPressed() {
@@ -27,11 +28,11 @@ class Snake extends Point {
         return;
       }
 
-      this._move(arrowCodesToDirection[keyCode]);
+      this._turn(arrowCodesToDirection[keyCode]);
     });
   }
 
-  _move(direction) {
+  _turn(direction) {
     switch (direction) {
       case 'left':
         this._moveLeft();
@@ -48,24 +49,49 @@ class Snake extends Point {
       default:
         break;
     }
-
-    this._emitMove();
   }
 
   _moveLeft() {
-    this._x -= this._moveShift;
+    this._move(() => {
+      this._x -= this._shift;
+    });
+  }
+
+  _move(callback) {
+    this._clearMoveIntervalID();
+
+    const self = this;
+    const moveFunc = () => {
+      callback();
+      self._emitMove();
+    }
+    moveFunc();
+
+    this._moveIntervalID = setInterval(moveFunc, 300);
+  }
+
+  _clearMoveIntervalID() {
+    if (this._moveIntervalID) {
+      clearInterval(this._moveIntervalID);
+    }
   }
 
   _moveUp() {
-    this._y -= this._moveShift;
+    this._move(() => {
+      this._y -= this._shift;
+    });
   }
 
   _moveRight() {
-    this._x += this._moveShift;
+    this._move(() => {
+      this._x += this._shift;
+    });
   }
 
   _moveDown() {
-    this._y += this._moveShift;
+    this._move(() => {
+      this._y += this._shift;
+    });
   }
 }
 

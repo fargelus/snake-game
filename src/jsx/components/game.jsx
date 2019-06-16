@@ -59,7 +59,7 @@ class Game extends React.Component {
     const snakeSettings = {
       x: this.state.snake.x,
       y: this.state.snake.y,
-      moveShift: this._cellSize,
+      shift: this._cellSize,
       onMove: this._moveSnake,
     };
     this._snake = new Snake(snakeSettings);
