@@ -1,19 +1,36 @@
 import Point from './point.js';
 
 class Food extends Point {
-  constructor(width, height) {
-    const randomX = Food.random(width);
-    const randomY = Food.random(height);
-    super(randomX, randomY);
+  constructor(settings) {
+    super();
+
+    this._lastX = settings.width;
+    this._lastY = settings.height;
+    this._limit = settings.cellSize;
+    this._point;
+
+    this._randomX;
+    this._randomY;
+    this._randomize();
+
+    const [x, y] = this._considerLimit();
+    this._setCoords(x, y);
   }
 
-  static random(upperBound) {
-    return Math.floor(Math.random() * upperBound);
+  _randomize() {
+    this._randomX = Math.floor(Math.random() * this._lastX);
+    this._randomY = Math.floor(Math.random() * this._lastY);
   }
 
-  updatePosition() {
-    this._x = Food.random(width);
-    this._y = Food.random(height);
+  _considerLimit() {
+    const realX = this._roundByLimit(this._randomX);
+    const realY = this._roundByLimit(this._randomY);
+
+    return [ realX, realY ];
+  }
+
+  _roundByLimit(val) {
+    return Math.floor(val / this._limit) * this._limit;
   }
 }
 

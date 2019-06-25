@@ -14,8 +14,8 @@ class Game extends React.Component {
     this._snake;
     this._moveSnake = this._moveSnake.bind(this);
 
-    this._food = new Food(this._width, this._height);
-    const [foodX, foodY] = this._getFoodCoordsConsiderCellSize();
+    this._food;
+    this._initFood();
 
     this.state = {
       snake: {
@@ -23,8 +23,8 @@ class Game extends React.Component {
         y: this._height/2,
       },
       food: {
-        x: foodX,
-        y: foodY,
+        x: this._food.getCoords().x,
+        y: this._food.getCoords().y,
       },
     };
 
@@ -41,18 +41,14 @@ class Game extends React.Component {
     };
   }
 
-  _getFoodCoordsConsiderCellSize() {
-    const coordX = this._food.getX();
-    const foodX = this._roundByCellSize(coordX);
+  _initFood() {
+    const foodSettings = {
+      width: this._width,
+      height: this._height,
+      cellSize: this._cellSize,
+    };
 
-    const coordY = this._food.getY();
-    const foodY = this._roundByCellSize(coordY);
-
-    return [ foodX, foodY ];
-  }
-
-  _roundByCellSize(val) {
-    return Math.floor(val / this._cellSize) * this._cellSize;
+    this._food = new Food(foodSettings);
   }
 
   _initSnake() {

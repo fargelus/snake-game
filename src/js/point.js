@@ -1,15 +1,19 @@
 class Point {
-  constructor(x, y) {
+  constructor(x=0, y=0) {
     this._x = x;
     this._y = y;
   }
 
-  getX() {
-    return this._x;
+  _setCoords(x, y) {
+    this._x = x;
+    this._y = y;
   }
 
-  getY() {
-    return this._y;
+  getCoords() {
+    return {
+      x: this._x,
+      y: this._y
+    };
   }
 }
 
