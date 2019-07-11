@@ -22,14 +22,13 @@ class Snake extends Figure {
     let prevDirection;
 
     window.addEventListener('keydown', (e) => {
-      let {keyCode} = e;
-      keyCode = '' + keyCode;
-      const isArrowPressed = arrowCodes.includes(keyCode);
+      const code = '' + e.keyCode;
+      const isArrowPressed = arrowCodes.includes(code);
       if (!isArrowPressed) {
         return;
       }
 
-      const newDirection = arrowCodesToDirection[keyCode];
+      const newDirection = arrowCodesToDirection[code];
       if (newDirection !== prevDirection) {
         this._turn(newDirection);
         prevDirection = newDirection;
@@ -58,7 +57,7 @@ class Snake extends Figure {
 
   _moveLeft() {
     this._move(() => {
-      this._body[0]._x -= this._shift;
+      this._moveHead(-this._shift, 0);
     });
   }
 
@@ -81,21 +80,28 @@ class Snake extends Figure {
     }
   }
 
+  _moveHead(valueX, valueY) {
+    const coords = this._getHeadCoords();
+    coords.x += valueX;
+    coords.y += valueY;
+    this._updateHeadCoords(coords);
+  }
+
   _moveUp() {
     this._move(() => {
-      this._body[0]._y -= this._shift;
+      this._moveHead(0, -this._shift);
     });
   }
 
   _moveRight() {
     this._move(() => {
-      this._body[0]._x += this._shift;
+      this._moveHead(this._shift, 0);
     });
   }
 
   _moveDown() {
     this._move(() => {
-      this._body[0]._y += this._shift;
+      this._moveHead(0, this._shift);
     });
   }
 }
