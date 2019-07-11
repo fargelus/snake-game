@@ -1,4 +1,5 @@
 import React from 'react';
+import { deepCopyObj } from '../../js/utils.js';
 
 class Grid extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class Grid extends React.Component {
 
   _setupAttrs(props) {
     const passedProps = props || this.props;
-    this._attrs = Object.assign({}, passedProps);
+    this._attrs = deepCopyObj(passedProps);
     this._removeCustomAttrs();
   }
 
@@ -116,7 +117,7 @@ class Grid extends React.Component {
 
   _saveOldFigures() {
     const isArray = Array.isArray;
-    this._prevFigures = isArray(this._figures) ? this._figures.slice() : [];
+    this._prevFigures = isArray(this._figures) ? deepCopyObj(this._figures) : [];
   }
 
   _initFigures() {

@@ -17,18 +17,24 @@ class Game extends React.Component {
     this._food;
     this._initFood();
 
+    /*
+       Змейке задаем нач.координаты.
+       Наживка сама генерирует свои координаты.
+    */
     this.state = {
       snake: {
         x: this._width/2,
         y: this._height/2,
       },
-      food: {
-        x: this._food.getCoords().x,
-        y: this._food.getCoords().y,
-      },
+      food: this._food.getCoords(),
     };
 
     this._initSnake();
+
+    this._snakeFigure;
+    this._foodFigure;
+    this._figures;
+    this._initFigures();
 
     this._gridProps;
     this._initGridProps();
@@ -63,11 +69,22 @@ class Game extends React.Component {
 
   _moveSnake() {
     this.setState({
-      snake: {
-        x: this._snake.getX(),
-        y: this._snake.getY(),
-      },
+      snake: this._snake.getCoords(),
     });
+  }
+
+  _initFigures() {
+    this._snakeFigure = {
+      coords: this.state.snake,
+      color: '#f00',
+    };
+
+    this._foodFigure = {
+      coords: this.state.food,
+      color: '#663399',
+    };
+
+    this._figures = [ this._snakeFigure, this._foodFigure ];
   }
 
   _initGridProps() {
@@ -75,31 +92,20 @@ class Game extends React.Component {
       w: this._width,
       h: this._height,
       cellSize: this._cellSize,
+      figures: this._figures,
     };
+  }
+
+  shouldComponentUpdate(_, nextState) {
+    this._snakeFigure.coords = nextState.snake;
+    this._foodFigure.coords = nextState.food;
+    return true;
   }
 
   render() {
-    this._updateGridPropsByFigures();
-
     return (<section style={this._style}>
                 <Grid {...this._gridProps}/>
             </section>);
-  }
-
-  _updateGridPropsByFigures() {
-    const figuresCont = {
-      figures: [
-        {
-          coords: this.state.snake,
-          color: '#f00',
-        },
-        {
-          coords: this.state.food,
-          color: '#663399',
-        }
-      ],
-    };
-    Object.assign(this._gridProps, figuresCont);
   }
 }
 
