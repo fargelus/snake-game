@@ -17,24 +17,21 @@ class Game extends React.Component {
     this._food;
     this._initFood();
 
+    this._initSnake();
+
     /*
        Змейке задаем нач.координаты.
        Наживка сама генерирует свои координаты.
     */
     this.state = {
-      snake: {
-        x: this._width/2,
-        y: this._height/2,
-      },
-      food: this._food.getCoords(),
+      snake: this._snake.getAllCoords(),
+      food: this._food.getAllCoords(),
     };
 
-    this._initSnake();
-
-    this._snakeFigure;
-    this._foodFigure;
-    this._figures;
-    this._initFigures();
+    this._snakeView;
+    this._foodView;
+    this._views;
+    this._initViews();
 
     this._gridProps;
     this._initGridProps();
@@ -59,8 +56,8 @@ class Game extends React.Component {
 
   _initSnake() {
     const snakeSettings = {
-      x: this.state.snake.x,
-      y: this.state.snake.y,
+      x: this._width / 2,
+      y: this._height / 2,
       shift: this._cellSize,
       onMove: this._moveSnake,
     };
@@ -69,22 +66,22 @@ class Game extends React.Component {
 
   _moveSnake() {
     this.setState({
-      snake: this._snake.getCoords(),
+      snake: this._snake.getAllCoords(),
     });
   }
 
-  _initFigures() {
-    this._snakeFigure = {
-      coords: this.state.snake,
+  _initViews() {
+    this._snakeView = {
+      coords: this._snake.getAllCoords(),
       color: '#f00',
     };
 
-    this._foodFigure = {
-      coords: this.state.food,
+    this._foodView = {
+      coords: this._food.getAllCoords(),
       color: '#663399',
     };
 
-    this._figures = [ this._snakeFigure, this._foodFigure ];
+    this._views = [ this._foodView, this._snakeView ];
   }
 
   _initGridProps() {
@@ -92,13 +89,13 @@ class Game extends React.Component {
       w: this._width,
       h: this._height,
       cellSize: this._cellSize,
-      figures: this._figures,
+      views: this._views,
     };
   }
 
   shouldComponentUpdate(_, nextState) {
-    this._snakeFigure.coords = nextState.snake;
-    this._foodFigure.coords = nextState.food;
+    this._snakeView.coords = nextState.snake;
+    // this._foodFigure.coords = nextState.food;
     return true;
   }
 

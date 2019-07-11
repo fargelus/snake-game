@@ -1,12 +1,11 @@
-import Point from './point.js';
+import Figure from './figure.js';
 
-class Snake extends Point {
+class Snake extends Figure {
   constructor(settings) {
     super(settings.x, settings.y);
 
     this._shift = settings.shift;
     this._emitMove = settings.onMove;
-    this._length = 1;
 
     this._handleArrowsPressed();
     this._moveIntervalID;
@@ -20,6 +19,8 @@ class Snake extends Point {
       40: 'down',
     };
     const arrowCodes = Object.keys(arrowCodesToDirection);
+    let prevDirection;
+
     window.addEventListener('keydown', (e) => {
       let {keyCode} = e;
       keyCode = '' + keyCode;
@@ -28,7 +29,11 @@ class Snake extends Point {
         return;
       }
 
-      this._turn(arrowCodesToDirection[keyCode]);
+      const newDirection = arrowCodesToDirection[keyCode];
+      if (newDirection !== prevDirection) {
+        this._turn(newDirection);
+        prevDirection = newDirection;
+      }
     });
   }
 
@@ -53,7 +58,7 @@ class Snake extends Point {
 
   _moveLeft() {
     this._move(() => {
-      this._x -= this._shift;
+      this._body[0]._x -= this._shift;
     });
   }
 
@@ -78,19 +83,19 @@ class Snake extends Point {
 
   _moveUp() {
     this._move(() => {
-      this._y -= this._shift;
+      this._body[0]._y -= this._shift;
     });
   }
 
   _moveRight() {
     this._move(() => {
-      this._x += this._shift;
+      this._body[0]._x += this._shift;
     });
   }
 
   _moveDown() {
     this._move(() => {
-      this._y += this._shift;
+      this._body[0]._y += this._shift;
     });
   }
 }

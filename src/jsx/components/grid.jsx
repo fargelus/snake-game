@@ -9,8 +9,9 @@ class Grid extends React.Component {
     this._width = +this.props.w;
     this._height = +this.props.h;
     this._cellSize = +this.props.cellSize;
-    this._prevFigures;
-    this._figures;
+
+    this._oldViews;
+    this._views;
 
     this._attrs;
     this._setupAttrs();
@@ -61,7 +62,7 @@ class Grid extends React.Component {
     this._setupContext();
     this._drawVerticalLines();
     this._drawHorizontalLines();
-    this._drawFigures();
+    this._drawViews();
   }
 
   _setupContext() {
@@ -96,42 +97,60 @@ class Grid extends React.Component {
     this._ctx.closePath();
   }
 
-  _drawFigures() {
-    this._updateFigures();
-    if (!this._figures.length) return;
+  _drawViews() {
+    this._updateViews();
+    if (!this._views.length) return;
 
-    this._resetPrevFiguresIfItExist();
-    this._figures.forEach((figure) => {
-      const { coords, color } = figure;
-      const { _ctx, _cellSize } = this;
-      _ctx.fillStyle = color;
-      const rectCoords = this._getRectCoords(coords.x, coords.y, _cellSize);
-      _ctx.fillRect(...rectCoords);
+    this._resetOldViewsIfItExist();
+    this._views.forEach((view) => {
+      this._setViewColor(view);
+      this._fillViewRects(view);
     });
   }
 
-  _updateFigures() {
-    this._saveOldFigures();
-    this._initFigures();
+  _updateViews() {
+    this._saveOldViews();
+    this._initViews();
   }
 
-  _saveOldFigures() {
+  _saveOldViews() {
     const isArray = Array.isArray;
-    this._prevFigures = isArray(this._figures) ? deepCopyObj(this._figures) : [];
+    this._oldViews = isArray(this._views) ? deepCopyObj(this._views) : [];
   }
 
-  _initFigures() {
-    this._figures = this._attrs.figures || [];
+  _initViews() {
+    this._views = this._attrs.views || [];
   }
 
-  _resetPrevFiguresIfItExist() {
-    if (!this._prevFigures.length) return;
+  _resetOldViewsIfItExist() {
+    if (!this._oldViews.length) return;
 
-    this._prevFigures.forEach((prevFigure) => {
-      const { coords } = prevFigure;
-      const { _ctx, _cellSize } = this;
+    this._oldViews.forEach((oldView) => {
+      this._clearViewRects(oldView);
+    });
+  }
+
+  _clearViewRects(view) {
+    const { _ctx, _cellSize } = this;
+    const { coords: coordsArr } = view;
+
+    coordsArr.forEach((coords) => {
       const rectCoords = this._getRectCoords(coords.x, coords.y, _cellSize);
       _ctx.clearRect(...rectCoords);
+    });
+  }
+
+  _setViewColor(view) {
+    this._ctx.fillStyle = view.color;
+  }
+
+  _fillViewRects(view) {
+    const { _ctx, _cellSize } = this;
+
+    const { coords: coordsArr } = view;
+    coordsArr.forEach((coords) => {
+      const rectCoords = this._getRectCoords(coords.x, coords.y, _cellSize);
+      _ctx.fillRect(...rectCoords);
     });
   }
 
@@ -141,7 +160,7 @@ class Grid extends React.Component {
 
   shouldComponentUpdate(newProps) {
     this._setupAttrs(newProps);
-    this._drawFigures();
+    this._drawViews();
     return true;
   }
 

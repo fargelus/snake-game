@@ -1,6 +1,6 @@
-import Point from './point.js';
+import Figure from './figure.js';
 
-class Food extends Point {
+class Food extends Figure {
   constructor(settings) {
     super();
 
@@ -14,7 +14,7 @@ class Food extends Point {
     this._randomize();
 
     const [x, y] = this._considerLimit();
-    this._setCoords(x, y);
+    this._addPoint(x, y);
   }
 
   _randomize() {
