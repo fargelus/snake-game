@@ -6,6 +6,7 @@ class Snake extends Figure {
 
     this._shift = settings.shift;
     this._emitMove = settings.onMove;
+    this._moveDirection;
 
     this._handleArrowsPressed();
     this._moveIntervalID;
@@ -19,7 +20,6 @@ class Snake extends Figure {
       40: 'down',
     };
     const arrowCodes = Object.keys(arrowCodesToDirection);
-    let prevDirection;
 
     window.addEventListener('keydown', (e) => {
       const code = '' + e.keyCode;
@@ -29,15 +29,39 @@ class Snake extends Figure {
       }
 
       const newDirection = arrowCodesToDirection[code];
-      if (newDirection !== prevDirection) {
-        this._turn(newDirection);
-        prevDirection = newDirection;
+      if (this._isDirectionAllowed(newDirection)) {
+        this._moveDirection = newDirection;
+        this._turn();
       }
     });
   }
 
-  _turn(direction) {
-    switch (direction) {
+  _isDirectionAllowed(direction) {
+    return this._notSameDirection(direction) && this._notOppositeDirection(direction);
+  }
+
+  _notSameDirection(direction) {
+    return direction !== this._moveDirection;
+  }
+
+  _notOppositeDirection(direction) {
+    const oppositeDirections = {
+      left: 'right',
+      up: 'down',
+      right: 'left',
+      down: 'up',
+    };
+
+    if (this._moveDirection in oppositeDirections) {
+      const oppositeDirection = oppositeDirections[this._moveDirection];
+      return direction !== oppositeDirection;
+    }
+
+    return true;
+  }
+
+  _turn() {
+    switch (this._moveDirection) {
       case 'left':
         this._moveLeft();
         break;
