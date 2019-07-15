@@ -12,7 +12,7 @@ class Figure {
     return this._body.map(point => point.getCoords());
   }
 
-  _getHeadCoords() {
+  getHeadCoords() {
     return this._body[0].getCoords();
   }
 

@@ -94,9 +94,43 @@ class Game extends React.Component {
   }
 
   shouldComponentUpdate(_, nextState) {
+    if (this._isSnakeBreaksWall()) {
+      this._snake.stop();
+      this._gameIsOver();
+      return false;
+    }
+
     this._snakeView.coords = nextState.snake;
-    // this._foodFigure.coords = nextState.food;
     return true;
+  }
+
+  _isSnakeBreaksWall() {
+    return this._isSnakeBreaksHorizon() || this._isSnakeBreaksVertical();
+  }
+
+  _isSnakeBreaksHorizon() {
+    const snakeHeadCoords = this._snake.getHeadCoords();
+    const { x } = snakeHeadCoords;
+    const boundX = this._width;
+    return x === 0 || x >= boundX;
+  }
+
+  _isSnakeBreaksVertical() {
+    const snakeHeadCoords = this._snake.getHeadCoords();
+    const { y } = snakeHeadCoords;
+    const boundY = this._height - this._cellSize;
+    return y === 0 || y === boundY;
+  }
+
+  _gameIsOver() {
+    alert('Game is over!');
+
+    this._initSnake();
+    this._food.replace();
+    this.setState({
+      snake: this._snake.getAllCoords(),
+      food: this._food.getAllCoords(),
+    });
   }
 
   render() {

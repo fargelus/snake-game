@@ -7,14 +7,21 @@ class Food extends Figure {
     this._lastX = settings.width;
     this._lastY = settings.height;
     this._limit = settings.cellSize;
-    this._point;
 
     this._randomX;
     this._randomY;
-    this._randomize();
-
-    const [x, y] = this._considerLimit();
+    const [x, y] = this._randomizeConsiderLimit();
     this._addPoint(x, y);
+  }
+
+  replace() {
+    const [x, y] = this._randomizeConsiderLimit();
+    this._updateHeadCoords(x, y);
+  }
+
+  _randomizeConsiderLimit() {
+    this._randomize();
+    return this._considerLimit();
   }
 
   _randomize() {

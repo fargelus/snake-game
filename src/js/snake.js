@@ -2,7 +2,7 @@ import Figure from './figure.js';
 
 class Snake extends Figure {
   constructor(settings) {
-    super(settings.x, settings.y);
+    super(settings.x * 1.5, settings.y);
 
     this._shift = settings.shift;
     this._emitMove = settings.onMove;
@@ -10,6 +10,16 @@ class Snake extends Figure {
 
     this._handleArrowsPressed();
     this._moveIntervalID;
+  }
+
+  stop() {
+    this._clearMoveIntervalID();
+  }
+
+  _clearMoveIntervalID() {
+    if (this._moveIntervalID) {
+      clearInterval(this._moveIntervalID);
+    }
   }
 
   _handleArrowsPressed() {
@@ -98,14 +108,8 @@ class Snake extends Figure {
     this._moveIntervalID = setInterval(moveFunc, 300);
   }
 
-  _clearMoveIntervalID() {
-    if (this._moveIntervalID) {
-      clearInterval(this._moveIntervalID);
-    }
-  }
-
   _moveHead(valueX, valueY) {
-    const coords = this._getHeadCoords();
+    const coords = this.getHeadCoords();
     coords.x += valueX;
     coords.y += valueY;
     this._updateHeadCoords(coords);
