@@ -17,7 +17,7 @@ class Food extends Figure {
   replace() {
     const [x, y] = this._randomizeConsiderLimit();
     const coords = {x, y};
-    this._updateHeadCoords(coords);
+    this._updateFirstCoords(coords);
   }
 
   _randomizeConsiderLimit() {

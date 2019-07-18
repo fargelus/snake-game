@@ -155,7 +155,7 @@ class Snake extends Figure {
     const coords = this.getFirstCoords();
     coords.x += valueX;
     coords.y += valueY;
-    this._updateHeadCoords(coords);
+    this._updateFirstCoords(coords);
   }
 
   _moveUp() {

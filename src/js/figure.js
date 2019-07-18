@@ -16,12 +16,12 @@ class Figure {
     return this._body[0].getCoords();
   }
 
-  _updateHeadCoords(coords) {
+  _updateFirstCoords(coords) {
     this._body[0]._setCoords(coords.x, coords.y);
   }
 
   _updateCoordsOnIndex(coords, index) {
-    if (index > 0 && index < this._body.length) {
+    if (index >= 0 && index < this._body.length) {
       this._body[index]._setCoords(coords.x, coords.y);
     }
   }
