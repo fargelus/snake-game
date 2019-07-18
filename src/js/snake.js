@@ -7,6 +7,7 @@ class Snake extends Figure {
     this._shift = settings.shift;
     this._emitMove = settings.onMove;
     this._moveDirection;
+    this._frozenCoords;
 
     this._handleArrowsPressed();
     this._moveIntervalID;
@@ -100,7 +101,9 @@ class Snake extends Figure {
 
     const self = this;
     const moveFunc = () => {
+      self._frozenCoords = this.getFirstCoords();
       callback();
+      self._moveTail();
       self._emitMove();
     }
     moveFunc();
@@ -108,8 +111,18 @@ class Snake extends Figure {
     this._moveIntervalID = setInterval(moveFunc, 300);
   }
 
+  _moveTail() {
+    const allCoordsExceptFirst = this.getAllCoords().slice(1);
+    allCoordsExceptFirst.forEach((coords, index) => {
+      const { x, y } = coords;
+      this._updateCoordsOnIndex(this._frozenCoords, index + 1);
+      this._frozenCoords.x = x;
+      this._frozenCoords.y = y;
+    });
+  }
+
   _moveHead(valueX, valueY) {
-    const coords = this.getHeadCoords();
+    const coords = this.getFirstCoords();
     coords.x += valueX;
     coords.y += valueY;
     this._updateHeadCoords(coords);

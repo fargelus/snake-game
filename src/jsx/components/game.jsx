@@ -101,6 +101,7 @@ class Game extends React.Component {
     }
 
     this._snakeView.coords = nextState.snake;
+    this._foodView.coords = nextState.food;
     return true;
   }
 
@@ -109,17 +110,17 @@ class Game extends React.Component {
   }
 
   _isSnakeBreaksHorizon() {
-    const snakeHeadCoords = this._snake.getHeadCoords();
+    const snakeHeadCoords = this._snake.getFirstCoords();
     const { x } = snakeHeadCoords;
     const boundX = this._width;
     return x === 0 || x >= boundX;
   }
 
   _isSnakeBreaksVertical() {
-    const snakeHeadCoords = this._snake.getHeadCoords();
+    const snakeHeadCoords = this._snake.getFirstCoords();
     const { y } = snakeHeadCoords;
-    const boundY = this._height - this._cellSize;
-    return y === 0 || y === boundY;
+    const boundY = this._height;
+    return y === 0 || y >= boundY;
   }
 
   _gameIsOver() {

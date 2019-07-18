@@ -12,12 +12,18 @@ class Figure {
     return this._body.map(point => point.getCoords());
   }
 
-  getHeadCoords() {
+  getFirstCoords() {
     return this._body[0].getCoords();
   }
 
   _updateHeadCoords(coords) {
     this._body[0]._setCoords(coords.x, coords.y);
+  }
+
+  _updateCoordsOnIndex(coords, index) {
+    if (index > 0 && index < this._body.length) {
+      this._body[index]._setCoords(coords.x, coords.y);
+    }
   }
 
   _addPoint(x, y) {
