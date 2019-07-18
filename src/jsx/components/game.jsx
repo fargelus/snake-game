@@ -12,7 +12,7 @@ class Game extends React.Component {
     this._cellSize = 20;
 
     this._snake;
-    this._moveSnake = this._moveSnake.bind(this);
+    this._snakeWasUpdated = this._snakeWasUpdated.bind(this);
 
     this._food;
     this._initFood();
@@ -59,15 +59,62 @@ class Game extends React.Component {
       x: this._width / 2,
       y: this._height / 2,
       shift: this._cellSize,
-      onMove: this._moveSnake,
+      onMove: this._snakeWasUpdated,
     };
     this._snake = new Snake(snakeSettings);
   }
 
-  _moveSnake() {
+  _snakeWasUpdated() {
+    this._handleGameRules();
+
     this.setState({
       snake: this._snake.getAllCoords(),
+      food: this._food.getAllCoords(),
     });
+  }
+
+  _handleGameRules() {
+    if (this._isSnakeSwallowTheBait()) {
+      this._snake.feed();
+    } else if (this._isSnakeBreaksWall()) {
+      this._snake.stop();
+      this._gameIsOver();
+    }
+  }
+
+  _isSnakeSwallowTheBait() {
+    const snakeCoords = this._snake.getFirstCoords();
+    const { x: snakeX, y: snakeY } = snakeCoords;
+
+    const foodCoords = this._food.getFirstCoords();
+    const { x: foodX, y: foodY } = foodCoords;
+
+    return snakeX === foodX && snakeY === foodY;
+  }
+
+  _isSnakeBreaksWall() {
+    return this._isSnakeBreaksHorizon() || this._isSnakeBreaksVertical();
+  }
+
+  _isSnakeBreaksHorizon() {
+    const snakeHeadCoords = this._snake.getFirstCoords();
+    const { x } = snakeHeadCoords;
+    const boundX = this._width;
+    return x === 0 || x >= boundX;
+  }
+
+  _isSnakeBreaksVertical() {
+    const snakeHeadCoords = this._snake.getFirstCoords();
+    const { y } = snakeHeadCoords;
+    const boundY = this._height;
+    return y === 0 || y >= boundY;
+  }
+
+  _gameIsOver() {
+    alert('Game is over!');
+
+    this._initSnake();
+    this._food.replace();
   }
 
   _initViews() {
@@ -94,44 +141,9 @@ class Game extends React.Component {
   }
 
   shouldComponentUpdate(_, nextState) {
-    if (this._isSnakeBreaksWall()) {
-      this._snake.stop();
-      this._gameIsOver();
-      return false;
-    }
-
     this._snakeView.coords = nextState.snake;
     this._foodView.coords = nextState.food;
     return true;
-  }
-
-  _isSnakeBreaksWall() {
-    return this._isSnakeBreaksHorizon() || this._isSnakeBreaksVertical();
-  }
-
-  _isSnakeBreaksHorizon() {
-    const snakeHeadCoords = this._snake.getFirstCoords();
-    const { x } = snakeHeadCoords;
-    const boundX = this._width;
-    return x === 0 || x >= boundX;
-  }
-
-  _isSnakeBreaksVertical() {
-    const snakeHeadCoords = this._snake.getFirstCoords();
-    const { y } = snakeHeadCoords;
-    const boundY = this._height;
-    return y === 0 || y >= boundY;
-  }
-
-  _gameIsOver() {
-    alert('Game is over!');
-
-    this._initSnake();
-    this._food.replace();
-    this.setState({
-      snake: this._snake.getAllCoords(),
-      food: this._food.getAllCoords(),
-    });
   }
 
   render() {

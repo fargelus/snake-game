@@ -13,6 +13,36 @@ class Snake extends Figure {
     this._moveIntervalID;
   }
 
+  feed() {
+    const lastCoords = this.getAllCoords().slice(-1);
+    const newCoords = {};
+    switch (this._moveDirection) {
+      case 'left':
+        newCoords.x = lastCoords.x + this._shift;
+        newCoords.y = lastCoords.y;
+        break;
+
+      case 'right':
+        newCoords.x = lastCoords.x - this._shift;
+        newCoords.y = lastCoords.y;
+        break;
+
+      case 'up':
+        newCoords.x = lastCoords.x;
+        newCoords.y = lastCoords.y + this._shift;
+        break;
+
+      case 'down':
+        newCoords.x = lastCoords.x;
+        newCoords.y = lastCoords.y - this._shift;
+        break;
+      default:
+        break;
+    }
+
+    this._addPoint(newCoords.x, newCoords.y);
+  }
+
   stop() {
     this._clearMoveIntervalID();
   }
