@@ -1,5 +1,6 @@
 import React from 'react';
 import Grid from './grid.jsx';
+import GameOver from './game_over.jsx';
 import Snake from '../../js/snake.js';
 import Food from '../../js/food.js';
 
@@ -173,6 +174,7 @@ class Game extends React.Component {
   render() {
     return (<section style={this._style}>
                 <Grid {...this._gridProps}/>
+                <GameOver score="0"/>
             </section>);
   }
 }
