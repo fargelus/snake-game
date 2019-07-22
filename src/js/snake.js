@@ -14,7 +14,7 @@ class Snake extends Figure {
   }
 
   feed() {
-    const lastCoords = this.getAllCoords().slice(-1);
+    const lastCoords = this.getAllCoords().slice(-1)[0];
     const newCoords = {};
     switch (this._moveDirection) {
       case 'left':
@@ -138,7 +138,7 @@ class Snake extends Figure {
     }
     moveFunc();
 
-    this._moveIntervalID = setInterval(moveFunc, 300);
+    this._moveIntervalID = setInterval(moveFunc, 200);
   }
 
   _moveTail() {
