@@ -1,8 +1,9 @@
 import React from 'react';
 import Grid from './grid.jsx';
-import GameOver from './game_over.jsx';
-import Snake from '../../js/snake.js';
-import Food from '../../js/food.js';
+import EndGame from './endgame.jsx';
+import Snake from '../../js/views/snake.js';
+import Food from '../../js/views/food.js';
+import Rules from '../../js/rules.js';
 
 class Game extends React.Component {
   constructor(props) {
@@ -19,6 +20,14 @@ class Game extends React.Component {
     this._initFood();
 
     this._initSnake();
+
+    const rulesParams = {
+      snake: this._snake,
+      food: this._food,
+      width: this._width,
+      height: this._height
+    };
+    this._rules = new Rules(rulesParams);
 
     /*
        Змейке задаем нач.координаты.
@@ -75,62 +84,11 @@ class Game extends React.Component {
   }
 
   _handleGameRules() {
-    if (this._isSnakeSwallowTheBait()) {
-      this._snake.feed();
-      this._food.replace();
-    } else if (this._isGameOver()) {
+    this._rules._check();
+    const isOver = this._rules._getGameOverIndicator();
+    if (isOver) {
       this._gameIsOver();
     }
-  }
-
-  _isSnakeSwallowTheBait() {
-    const snakeCoords = this._snake.getFirstCoords();
-    const foodCoords = this._food.getFirstCoords();
-
-    return this._isCoordsAreEqual(snakeCoords, foodCoords);
-  }
-
-  _isCoordsAreEqual(firstCoords, secondCoords) {
-    return firstCoords.x === secondCoords.x
-      && firstCoords.y === secondCoords.y;
-  }
-
-  _isGameOver() {
-    return this._isSnakeBreaksWall() || this._isSnakeEatHerself();
-  }
-
-  _isSnakeBreaksWall() {
-    return this._isSnakeBreaksHorizon() || this._isSnakeBreaksVertical();
-  }
-
-  _isSnakeBreaksHorizon() {
-    const snakeHeadCoords = this._snake.getFirstCoords();
-    const { x } = snakeHeadCoords;
-    const boundX = this._width;
-    return x < 0 || x >= boundX;
-  }
-
-  _isSnakeBreaksVertical() {
-    const snakeHeadCoords = this._snake.getFirstCoords();
-    const { y } = snakeHeadCoords;
-    const boundY = this._height;
-    return y < 0 || y >= boundY;
-  }
-
-  _isSnakeEatHerself() {
-    const snakeCoords = this._snake.getAllCoords();
-
-    for (let i = 0; i < snakeCoords.length - 1; ++i) {
-      const comparedCoords = snakeCoords[i];
-      for(let j = i + 1; j < snakeCoords.length; ++j) {
-          const iteratedCoords = snakeCoords[j];
-          if (this._isCoordsAreEqual(comparedCoords, iteratedCoords)) {
-            return true;
-          }
-      }
-    }
-
-    return false;
   }
 
   _gameIsOver() {
@@ -140,6 +98,10 @@ class Game extends React.Component {
 
     this._initSnake();
     this._food.replace();
+    this._rules._update({
+      food: this._food,
+      snake: this._snake,
+    });
   }
 
   _initViews() {
@@ -174,7 +136,7 @@ class Game extends React.Component {
   render() {
     return (<section style={this._style}>
                 <Grid {...this._gridProps}/>
-                <GameOver score="0"/>
+                <EndGame score="0"/>
             </section>);
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class GameOver extends React.Component {
+class EndGame extends React.Component {
   constructor(props) {
     super(props);
 
@@ -51,8 +51,8 @@ class GameOver extends React.Component {
   }
 }
 
-GameOver.propTypes = {
+EndGame.propTypes = {
   score: PropTypes.string.isRequired,
 };
 
-export default GameOver;
+export default EndGame;
