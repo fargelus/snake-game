@@ -47,6 +47,10 @@ class Snake extends Figure {
     this._clearMoveIntervalID();
   }
 
+  getSize() {
+    return this.getAllCoords().length - 1;
+  }
+
   _clearMoveIntervalID() {
     if (this._moveIntervalID) {
       clearInterval(this._moveIntervalID);

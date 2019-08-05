@@ -28,6 +28,7 @@ class Game extends React.Component {
       height: this._height
     };
     this._rules = new Rules(rulesParams);
+    this._score = 0;
 
     /*
        Змейке задаем нач.координаты.
@@ -52,6 +53,8 @@ class Game extends React.Component {
       left: '50%',
       transform: 'translate(-50%, -50%)',
     };
+
+    this._gameOver = false;
   }
 
   _initFood() {
@@ -85,23 +88,15 @@ class Game extends React.Component {
 
   _handleGameRules() {
     this._rules._check();
-    const isOver = this._rules._getGameOverIndicator();
-    if (isOver) {
-      this._gameIsOver();
+    this._gameOver = this._rules._getGameOverIndicator();
+    if (this._gameOver) {
+      this._endCurrentGame();
     }
+    this._score = this._snake.getSize();
   }
 
-  _gameIsOver() {
+  _endCurrentGame() {
     this._snake.stop();
-
-    alert('Game is over!');
-
-    this._initSnake();
-    this._food.replace();
-    this._rules._update({
-      food: this._food,
-      snake: this._snake,
-    });
   }
 
   _initViews() {
@@ -135,8 +130,8 @@ class Game extends React.Component {
 
   render() {
     return (<section style={this._style}>
-                <Grid {...this._gridProps}/>
-                <EndGame score="0"/>
+              <Grid {...this._gridProps}/>
+              {this._gameOver ? <EndGame score={this._score}/> : null}
             </section>);
   }
 }
