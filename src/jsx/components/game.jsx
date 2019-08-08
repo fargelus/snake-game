@@ -99,6 +99,10 @@ class Game extends React.Component {
     this._snake.stop();
   }
 
+  _startNewGame() {
+    console.log('In parent!!!');
+  }
+
   _initViews() {
     this._snakeView = {
       coords: this._snake.getAllCoords(),
@@ -129,9 +133,14 @@ class Game extends React.Component {
   }
 
   render() {
+    this._gameOver = true;
     return (<section style={this._style}>
               <Grid {...this._gridProps}/>
-              {this._gameOver ? <EndGame score={this._score}/> : null}
+              {
+                this._gameOver
+                ? <EndGame onStartNewGame={this._startNewGame.bind(this)} score={this._score}/>
+                : null
+              }
             </section>);
   }
 }
