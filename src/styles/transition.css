@@ -1,0 +1,15 @@
+.curtain-appear {
+  height: 0;
+}
+.curtain-appear-active {
+  height: 100%;
+  transition: height 500ms;
+}
+.curtain-appear-done,
+.curtain-exit {
+  height: 100%;
+}
+.curtain-exit-active {
+  height: 0;
+  transition: height 500ms;
+}
