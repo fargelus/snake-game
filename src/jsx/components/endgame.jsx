@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import ControlButton from './control_button.jsx';
 import { CSSTransition } from "react-transition-group";
 import '../../styles/transition.css';
 
 const EndGame = (props) => {
+  if (!props.init) {
+    return null;
+  }
+
   const baseParentStyle = {
     position: 'absolute',
     width: '100%',
@@ -40,5 +45,10 @@ const EndGame = (props) => {
         );
 };
 
+EndGame.propTypes = {
+  score: PropTypes.number.isRequired,
+  onStartNewGame: PropTypes.func,
+  init: PropTypes.bool.isRequired,
+};
 
 export default EndGame;

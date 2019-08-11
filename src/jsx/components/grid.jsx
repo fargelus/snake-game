@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { deepCopyObj } from '../../js/utils.js';
 
 class Grid extends React.Component {
@@ -168,5 +170,11 @@ class Grid extends React.Component {
     return <canvas ref="cnv" {...this._attrs}></canvas>;
   }
 }
+
+Grid.propTypes = {
+  w: PropTypes.string.isRequired,
+  h: PropTypes.string.isRequired,
+  cellSize: PropTypes.number.isRequired
+};
 
 export default Grid;

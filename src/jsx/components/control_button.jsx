@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const ControlButton = (props) => {
   const btnStyle = {
@@ -21,5 +22,11 @@ const ControlButton = (props) => {
       </button>
   );
 }
+
+ControlButton.propTypes = {
+  children: PropTypes.string,
+  className: PropTypes.string,
+  action: PropTypes.func,
+};
 
 export default ControlButton;
