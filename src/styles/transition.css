@@ -1,19 +1,20 @@
-.curtain-appear {
-  height: 0;
-}
-.curtain-appear-active {
-  height: 100%;
-  transition: height 500ms;
-}
-.curtain-appear-done,
+.curtain-enter,
 .curtain-exit {
-  height: 100%;
-}
-.curtain-exit-active {
-  height: 0;
   transition: height 650ms;
 }
 
-.curtain-exit .controls {
-  display: none;
+.curtain-enter,
+.curtain-exit.curtain-exit-active,
+.curtain-exit-done {
+  height: 0;
+}
+
+.curtain-enter-active,
+.curtain-enter-done,
+.curtain-exit {
+  height: 100%;
+}
+
+.curtain-exit-active .controls {
+  display: none !important;
 }

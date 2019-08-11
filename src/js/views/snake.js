@@ -9,7 +9,7 @@ class Snake extends Figure {
     this._moveDirection;
     this._frozenCoords;
 
-    this._handleArrowsPressed();
+    this._handleKeyDown();
     this._moveIntervalID;
   }
 
@@ -45,6 +45,29 @@ class Snake extends Figure {
 
   stop() {
     this._clearMoveIntervalID();
+    window.removeEventListener('keydown', this._defineMoveDirection);
+  }
+
+  _defineMoveDirection(e) {
+    const arrowCodesToDirection = {
+      37: 'left',
+      38: 'up',
+      39: 'right',
+      40: 'down',
+    };
+    const arrowCodes = Object.keys(arrowCodesToDirection);
+
+    const code = '' + e.keyCode;
+    const isArrowPressed = arrowCodes.includes(code);
+    if (!isArrowPressed) {
+      return;
+    }
+
+    const newDirection = arrowCodesToDirection[code];
+    if (this._isDirectionAllowed(newDirection)) {
+      this._moveDirection = newDirection;
+      this._turn();
+    }
   }
 
   getSize() {
@@ -57,28 +80,9 @@ class Snake extends Figure {
     }
   }
 
-  _handleArrowsPressed() {
-    const arrowCodesToDirection = {
-      37: 'left',
-      38: 'up',
-      39: 'right',
-      40: 'down',
-    };
-    const arrowCodes = Object.keys(arrowCodesToDirection);
-
-    window.addEventListener('keydown', (e) => {
-      const code = '' + e.keyCode;
-      const isArrowPressed = arrowCodes.includes(code);
-      if (!isArrowPressed) {
-        return;
-      }
-
-      const newDirection = arrowCodesToDirection[code];
-      if (this._isDirectionAllowed(newDirection)) {
-        this._moveDirection = newDirection;
-        this._turn();
-      }
-    });
+  _handleKeyDown() {
+    this._defineMoveDirection = this._defineMoveDirection.bind(this);
+    window.addEventListener('keydown', this._defineMoveDirection);
   }
 
   _isDirectionAllowed(direction) {

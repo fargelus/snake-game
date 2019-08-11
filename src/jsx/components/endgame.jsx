@@ -19,7 +19,7 @@ const EndGame = (props) => {
           <div>
             <CSSTransition
                 in={props.init}
-                timeout={400}
+                timeout={650}
                 classNames="curtain"
                 unmountOnExit
                 appear
@@ -28,7 +28,7 @@ const EndGame = (props) => {
                 style={baseParentStyle}>
                   <div style={{textTransform: 'uppercase'}}>Game Over!</div>
                   <div>Your score is {props.score}</div>
-                  <div className="d-flex flex-column mt-3">
+                  <div className="d-flex flex-column mt-3 controls">
                     <ControlButton action={props.onStartNewGame} className="mb-3 align-self-center">Start new game</ControlButton>
                     <div className="d-flex">
                       <ControlButton>Save this score</ControlButton>
