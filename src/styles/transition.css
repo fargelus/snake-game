@@ -11,5 +11,9 @@
 }
 .curtain-exit-active {
   height: 0;
-  transition: height 500ms;
+  transition: height 650ms;
+}
+
+.curtain-exit .controls {
+  display: none;
 }

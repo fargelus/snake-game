@@ -6,10 +6,6 @@ import { CSSTransition } from "react-transition-group";
 import '../../styles/transition.css';
 
 const EndGame = (props) => {
-  if (!props.init) {
-    return null;
-  }
-
   const baseParentStyle = {
     position: 'absolute',
     width: '100%',
@@ -22,7 +18,7 @@ const EndGame = (props) => {
   return (
           <div>
             <CSSTransition
-                in={true}
+                in={props.init}
                 timeout={400}
                 classNames="curtain"
                 unmountOnExit
