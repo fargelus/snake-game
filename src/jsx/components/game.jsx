@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Grid from './grid.jsx';
 import EndGame from './endgame.jsx';
 import Snake from '../../js/views/snake.js';
@@ -37,6 +39,7 @@ class Game extends React.Component {
     this.state = {
       snake: this._snake.getAllCoords(),
       food: this._food.getAllCoords(),
+      over: true,
     };
 
     this._snakeView;
@@ -53,8 +56,6 @@ class Game extends React.Component {
       left: '50%',
       transform: 'translate(-50%, -50%)',
     };
-
-    this._gameOver = false;
   }
 
   _initFood() {
@@ -79,17 +80,13 @@ class Game extends React.Component {
 
   _snakeWasUpdated() {
     this._handleGameRules();
-
-    this.setState({
-      snake: this._snake.getAllCoords(),
-      food: this._food.getAllCoords(),
-    });
+    this._refreshGrid();
   }
 
   _handleGameRules() {
     this._rules._check();
-    this._gameOver = this._rules._getGameOverIndicator();
-    if (this._gameOver) {
+    const isOver = this._rules._getGameOverIndicator();
+    if (isOver) {
       this._endCurrentGame();
     }
     this._score = this._snake.getSize();
@@ -97,10 +94,30 @@ class Game extends React.Component {
 
   _endCurrentGame() {
     this._snake.stop();
+    this.setState({
+      over: true,
+    });
+  }
+
+  _refreshGrid() {
+    this.setState({
+      snake: this._snake.getAllCoords(),
+      food: this._food.getAllCoords(),
+    });
   }
 
   _startNewGame() {
-    console.log('In parent!!!');
+    this.setState({
+      over: false,
+    });
+
+    this._initSnake();
+    this._food.replace();
+    this._rules._update({
+      food: this._food,
+      snake: this._snake,
+    });
+    this._refreshGrid();
   }
 
   _initViews() {
@@ -133,16 +150,21 @@ class Game extends React.Component {
   }
 
   render() {
-    this._gameOver = true;
-    return (<section style={this._style}>
-              <Grid {...this._gridProps}/>
-              {
-                this._gameOver
-                ? <EndGame onStartNewGame={this._startNewGame.bind(this)} score={this._score}/>
-                : null
-              }
-            </section>);
+    return (
+      <section style={this._style}>
+        <Grid {...this._gridProps}/>
+        <EndGame init={this.state.over}
+                 onStartNewGame={this._startNewGame.bind(this)}
+                 score={this._score}>
+        </EndGame>
+      </section>
+    );
   }
 }
+
+Game.propTypes = {
+  w: PropTypes.string,
+  h: PropTypes.string,
+};
 
 export default Game;
