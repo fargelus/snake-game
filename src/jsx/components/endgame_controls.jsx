@@ -26,7 +26,6 @@ class EndGameControls extends React.Component {
   }
 
   _defineRenderComponent() {
-    console.log(this.state);
     if (this.state.buttons) {
       this._renderComponent = (
         <div className="d-flex flex-column">
@@ -48,7 +47,6 @@ class EndGameControls extends React.Component {
   }
 
   render() {
-    console.log('IN RENDER');
     this._defineRenderComponent();
 
     return (
@@ -62,5 +60,6 @@ class EndGameControls extends React.Component {
 EndGameControls.propTypes = {
   startNewGameAction: PropTypes.func,
 };
+
 
 export default EndGameControls;

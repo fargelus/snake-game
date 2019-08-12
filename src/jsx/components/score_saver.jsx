@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import ControlButton from './control_button.jsx';
 
-const ScoreSaver = (props) => {
+
+const ScoreSaver = () => {
   return (
     <div className="input-group">
       <input type="text" style={{height: 'auto'}} className="form-control" placeholder="Введите Ваше имя" />
@@ -15,5 +15,6 @@ const ScoreSaver = (props) => {
     </div>
   );
 }
+
 
 export default ScoreSaver;
