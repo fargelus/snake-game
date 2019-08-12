@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import ControlButton from './control_button.jsx';
 import { CSSTransition } from "react-transition-group";
+
 import '../../styles/transition.css';
+import EndGameControls from './endgame_controls.jsx';
 
 const EndGame = (props) => {
   const baseParentStyle = {
@@ -28,13 +28,7 @@ const EndGame = (props) => {
                 style={baseParentStyle}>
                   <div style={{textTransform: 'uppercase'}}>Game Over!</div>
                   <div>Your score is {props.score}</div>
-                  <div className="d-flex flex-column mt-3 controls">
-                    <ControlButton action={props.onStartNewGame} className="mb-3 align-self-center">Start new game</ControlButton>
-                    <div className="d-flex">
-                      <ControlButton>Save this score</ControlButton>
-                      <ControlButton className="ml-3">View scoreboard</ControlButton>
-                    </div>
-                  </div>
+                  <EndGameControls startNewGameAction={props.onStartNewGame} className="controls mt-3" />
                 </div>
           </CSSTransition>
         </div>
