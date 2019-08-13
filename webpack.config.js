@@ -5,14 +5,7 @@ module.exports = {
   mode: 'development',
   target: 'node',
 
-  entry: './src/jsx/app.jsx',
-
-  devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    port: 3000,
-    watchContentBase: true,
-    writeToDisk: true,
-  },
+  entry: ['babel-polyfill', './src/jsx/app.jsx'],
 
   resolve: {
     extensions: ['.js', '.jsx', '.css']
