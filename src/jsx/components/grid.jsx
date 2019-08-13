@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { deepCopyObj } from '../../js/utils.js';
 
+
 class Grid extends React.Component {
   constructor(props) {
     super(props);
@@ -176,5 +177,6 @@ Grid.propTypes = {
   h: PropTypes.string.isRequired,
   cellSize: PropTypes.number.isRequired
 };
+
 
 export default Grid;

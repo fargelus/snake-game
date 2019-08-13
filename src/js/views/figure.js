@@ -1,5 +1,6 @@
 import Point from './point.js';
 
+
 class Figure {
   constructor(x, y) {
     this._body = [];
@@ -31,5 +32,6 @@ class Figure {
     this._body.push(point);
   }
 }
+
 
 export default Figure;

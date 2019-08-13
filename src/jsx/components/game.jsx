@@ -7,6 +7,7 @@ import Snake from '../../js/views/snake.js';
 import Food from '../../js/views/food.js';
 import Rules from '../../js/rules.js';
 
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -39,7 +40,7 @@ class Game extends React.Component {
     this.state = {
       snake: this._snake.getAllCoords(),
       food: this._food.getAllCoords(),
-      over: false,
+      over: true,
     };
 
     this._snakeView;
@@ -166,5 +167,6 @@ Game.propTypes = {
   w: PropTypes.string,
   h: PropTypes.string,
 };
+
 
 export default Game;

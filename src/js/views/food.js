@@ -1,5 +1,6 @@
 import Figure from './figure.js';
 
+
 class Food extends Figure {
   constructor(settings) {
     super();
@@ -41,5 +42,6 @@ class Food extends Figure {
     return Math.floor(val / this._limit) * this._limit;
   }
 }
+
 
 export default Food;

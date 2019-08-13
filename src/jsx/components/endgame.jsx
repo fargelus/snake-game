@@ -5,6 +5,7 @@ import { CSSTransition } from "react-transition-group";
 import '../../styles/transition.css';
 import EndGameControls from './endgame_controls.jsx';
 
+
 const EndGame = (props) => {
   const baseParentStyle = {
     position: 'absolute',
@@ -40,5 +41,6 @@ EndGame.propTypes = {
   onStartNewGame: PropTypes.func,
   init: PropTypes.bool.isRequired,
 };
+
 
 export default EndGame;

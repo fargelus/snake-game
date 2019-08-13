@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
 const ControlButton = (props) => {
   const btnStyle = {
     padding: '10px',
@@ -28,5 +29,6 @@ ControlButton.propTypes = {
   className: PropTypes.string,
   action: PropTypes.func,
 };
+
 
 export default ControlButton;

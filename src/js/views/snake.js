@@ -1,5 +1,6 @@
 import Figure from './figure.js';
 
+
 class Snake extends Figure {
   constructor(settings) {
     super(settings.x * 1.5, settings.y);
@@ -184,5 +185,6 @@ class Snake extends Figure {
     });
   }
 }
+
 
 export default Snake;

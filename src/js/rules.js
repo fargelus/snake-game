@@ -1,5 +1,6 @@
 import { isCoordsAreEqual } from './utils.js';
 
+
 class Rules {
   constructor(params) {
     this._snake = params.snake;
@@ -72,5 +73,6 @@ class Rules {
     this._gameOver = false;
   }
 }
+
 
 export default Rules;
