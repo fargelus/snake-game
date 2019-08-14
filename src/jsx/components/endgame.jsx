@@ -29,7 +29,9 @@ const EndGame = (props) => {
                 style={baseParentStyle}>
                   <div style={{textTransform: 'uppercase'}}>Game Over!</div>
                   <div>Your score is {props.score}</div>
-                  <EndGameControls startNewGameAction={props.onStartNewGame} className="controls mt-3" />
+                  <EndGameControls
+                    startNewGameAction={props.onStartNewGame}
+                    className="controls mt-3" />
                 </div>
           </CSSTransition>
         </div>

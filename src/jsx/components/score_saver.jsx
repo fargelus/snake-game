@@ -25,14 +25,14 @@ class ScoreSaver extends React.Component {
     ev.preventDefault();
     if (!this.state.username) return;
 
+    const sendData = JSON.stringify({a: 1});
     (async () => {
       await fetch('/save_score', {
         method: 'post',
         headers: {
-          'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body: "{'a': 1}"
+        body: sendData,
       });
     })();
   }
