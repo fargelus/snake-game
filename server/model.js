@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
+
 class Model {
   constructor() {
     this.url = 'mongodb://localhost:27017';
@@ -37,5 +38,6 @@ class Model {
             });
   }
 }
+
 
 module.exports = Model;
