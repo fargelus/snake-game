@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ControlButton from './control_button.jsx';
 
@@ -25,7 +26,7 @@ class ScoreSaver extends React.Component {
     ev.preventDefault();
     if (!this.state.username) return;
 
-    const sendData = JSON.stringify({a: 1});
+    const sendData = this._makeSendData();
     (async () => {
       await fetch('/save_score', {
         method: 'post',
@@ -35,6 +36,14 @@ class ScoreSaver extends React.Component {
         body: sendData,
       });
     })();
+  }
+
+  _makeSendData() {
+    const sendData = {
+      name: this.state.username,
+      score: this.props.score,
+    };
+    return JSON.stringify(sendData);
   }
 
   render() {
@@ -58,5 +67,8 @@ class ScoreSaver extends React.Component {
   }
 }
 
+ScoreSaver.propTypes = {
+  score: PropTypes.number.isRequired,
+};
 
 export default ScoreSaver;

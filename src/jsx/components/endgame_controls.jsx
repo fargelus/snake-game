@@ -42,7 +42,7 @@ class EndGameControls extends React.Component {
       </div>
     );
     } else if (this.state.save_score) {
-      this._renderComponent = <ScoreSaver />;
+      this._renderComponent = <ScoreSaver score={this.props.score}/>;
     }
   }
 
@@ -59,6 +59,7 @@ class EndGameControls extends React.Component {
 
 EndGameControls.propTypes = {
   startNewGameAction: PropTypes.func,
+  score: PropTypes.number.isRequired,
 };
 
 

@@ -30,6 +30,7 @@ const EndGame = (props) => {
                   <div style={{textTransform: 'uppercase'}}>Game Over!</div>
                   <div>Your score is {props.score}</div>
                   <EndGameControls
+                    score={props.score}
                     startNewGameAction={props.onStartNewGame}
                     className="controls mt-3" />
                 </div>

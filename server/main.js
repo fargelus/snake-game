@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser')
-const MongoClient = require('mongodb').MongoClient;
+const Model = require('./model.js');
 
 
 const app = express();
@@ -16,6 +16,14 @@ app.get('/', (res) => {
   res.sendFile('index.html');
 });
 
-app.post('/save_score', () => {
-  console.log('Request receive');
+const scoreModel = new Model();
+app.post('/save_score', (req, res) => {
+  const data = req.body;
+  const isData = Object.keys(data).length;
+  const responsed = {};
+  if (isData) {
+    scoreModel.insertDocument(data);
+    responsed.status = 'success';
+  }
+  res.json(responsed);
 });

@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rm -rf public",
     "static": "npm run clean && node_modules/.bin/webpack",
-    "server": "nodemon -L server.js",
+    "server": "nodemon -L server/main.js",
     "dev": "node_modules/.bin/webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
