@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ControlButton from './control_button.jsx';
+import ControlButton from '../control_button.jsx';
 
 
 class ScoreSaver extends React.Component {

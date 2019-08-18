@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Grid from './grid.jsx';
-import EndGame from './endgame.jsx';
+import EndGame from './endgame/endgame.jsx';
 import Snake from '../../js/views/snake.js';
 import Food from '../../js/views/food.js';
 import Rules from '../../js/rules.js';

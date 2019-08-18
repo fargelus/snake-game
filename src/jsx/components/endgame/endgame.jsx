@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from "react-transition-group";
 
-import '../../styles/transition.css';
-import EndGameControls from './endgame_controls.jsx';
+import '../../../styles/transition.css';
+import Controls from './controls.jsx';
 
 
 const EndGame = (props) => {
@@ -29,7 +29,7 @@ const EndGame = (props) => {
                 style={baseParentStyle}>
                   <div style={{textTransform: 'uppercase'}}>Game Over!</div>
                   <div>Your score is {props.score}</div>
-                  <EndGameControls
+                  <Controls
                     score={props.score}
                     startNewGameAction={props.onStartNewGame}
                     className="controls mt-3" />

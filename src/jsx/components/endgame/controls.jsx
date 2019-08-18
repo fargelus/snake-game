@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ControlButton from './control_button.jsx';
-import ScoreSaver from './score_saver.jsx';
-import {resetObjectVals} from '../../js/utils.js';
+import ScoreSaver from './score/saver.jsx';
+import {resetObjectVals} from '../../../js/utils.js';
 
 
-class EndGameControls extends React.Component {
+class Controls extends React.Component {
   constructor(props) {
     super(props);
 
@@ -81,10 +81,10 @@ class EndGameControls extends React.Component {
   }
 }
 
-EndGameControls.propTypes = {
+Controls.propTypes = {
   startNewGameAction: PropTypes.func,
   score: PropTypes.number.isRequired,
 };
 
 
-export default EndGameControls;
+export default Controls;
