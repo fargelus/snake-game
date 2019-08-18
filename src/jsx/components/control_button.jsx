@@ -17,8 +17,14 @@ const ControlButton = (props) => {
     display: 'block',
   };
 
+  const attrs = Object.assign({}, props);
+  attrs.style = btnStyle;
+  delete attrs.action;
+
   return (
-      <button className={props.className} style={btnStyle} onClick={props.action}>
+      <button
+        {...attrs}
+        onClick={props.action}>
         {props.children}
       </button>
   );

@@ -27,14 +27,19 @@ class ScoreSaver extends React.Component {
     if (!this.state.username) return;
 
     const sendData = this._makeSendData();
+    const that = this;
     (async () => {
-      await fetch('/save_score', {
+      const response = await fetch('/save_score', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
         },
         body: sendData,
       });
+
+      if (response.ok) {
+        that.props.onSave();
+      }
     })();
   }
 
@@ -53,6 +58,7 @@ class ScoreSaver extends React.Component {
           <input type="text"
                  style={{height: 'auto'}}
                  className="form-control"
+                 required
                  placeholder="Введите Ваше имя"
                  onChange={this._handleUsernameChange}
                  value={this.state.username}/>
@@ -69,6 +75,7 @@ class ScoreSaver extends React.Component {
 
 ScoreSaver.propTypes = {
   score: PropTypes.number.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 export default ScoreSaver;

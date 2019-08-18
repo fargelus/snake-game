@@ -11,11 +11,12 @@ class EndGameControls extends React.Component {
     super(props);
 
     this.state = {
-      'buttons': true,
+      'menu': true,
       'save_score': false,
       'scoreboard': false,
     };
 
+    this._scoreSaved = false;
     this._renderComponent = null;
   }
 
@@ -25,25 +26,48 @@ class EndGameControls extends React.Component {
     this.setState(defaultState);
   }
 
+  _onScoreSaved() {
+    this._scoreSaved = true;
+    this._renderMenuComponent();
+  }
+
+  _renderMenuComponent() {
+    const defaultState = resetObjectVals(this.state, false);
+    defaultState.menu = true;
+    this.setState(defaultState);
+  }
+
   _defineRenderComponent() {
-    if (this.state.buttons) {
-      this._renderComponent = (
-        <div className="d-flex flex-column">
-          <ControlButton action={this.props.startNewGameAction}
-            className="mb-3 align-self-center">
-              Start new game
-          </ControlButton>
-          <div className="d-flex">
-            <ControlButton action={this._renderSaveScore.bind(this)}>
-              Save this score
-            </ControlButton>
-            <ControlButton className="ml-3">View scoreboard</ControlButton>
-          </div>
-      </div>
-    );
+    if (this.state.menu) {
+      this._renderComponent = this._buildMenuRenderComponent();
     } else if (this.state.save_score) {
-      this._renderComponent = <ScoreSaver score={this.props.score}/>;
+      this._renderComponent = this._buildSaveScoreRenderComponent();
     }
+  }
+
+  _buildMenuRenderComponent() {
+    return (
+      <div className="d-flex flex-column">
+        <ControlButton action={this.props.startNewGameAction}
+          className="mb-3 align-self-center">
+            Start new game
+        </ControlButton>
+        <div className="d-flex">
+          <ControlButton
+            disabled={this._scoreSaved}
+            action={this._renderSaveScore.bind(this)}>
+            Save this score
+          </ControlButton>
+          <ControlButton className="ml-3">View scoreboard</ControlButton>
+        </div>
+    </div>
+    );
+  }
+
+  _buildSaveScoreRenderComponent() {
+    return <ScoreSaver
+            onSave={this._onScoreSaved.bind(this)}
+            score={this.props.score}/>;
   }
 
   render() {
