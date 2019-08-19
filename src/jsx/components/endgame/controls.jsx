@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ControlButton from './control_button.jsx';
 import ScoreSaver from './score/saver.jsx';
+import Board from './score/board.jsx';
 import {resetObjectVals} from '../../../js/utils.js';
 
 
@@ -20,10 +21,68 @@ class Controls extends React.Component {
     this._renderComponent = null;
   }
 
+  render() {
+    this._defineRenderComponent();
+
+    return (
+      <div className={this.props.className}>
+        {this._renderComponent}
+      </div>
+    )
+  }
+
+  _defineRenderComponent() {
+    if (this.state.menu) {
+      this._renderComponent = this._buildMenuRenderComponent();
+    } else if (this.state.save_score) {
+      this._renderComponent = this._buildSaveScoreRenderComponent();
+    } else {
+      this._renderComponent = this._buildScoreBoard();
+    }
+  }
+
+  _buildMenuRenderComponent() {
+    return (
+      <div className="d-flex flex-column">
+        <ControlButton
+          action={this.props.startNewGameAction}
+          className="mb-3 align-self-center">
+            Start new game
+        </ControlButton>
+
+        <div className="d-flex">
+          <ControlButton
+            disabled={this._scoreSaved}
+            action={this._renderSaveScore.bind(this)}>
+            Save this score
+          </ControlButton>
+
+          <ControlButton
+            action={this._renderScoreBoard.bind(this)}
+            className="ml-3">
+              View scoreboard
+          </ControlButton>
+        </div>
+    </div>
+    );
+  }
+
   _renderSaveScore() {
     const defaultState = resetObjectVals(this.state, false);
     defaultState.save_score = true;
     this.setState(defaultState);
+  }
+
+  _renderScoreBoard() {
+    const defaultState = resetObjectVals(this.state, false);
+    defaultState.scoreboard = true;
+    this.setState(defaultState);
+  }
+
+  _buildSaveScoreRenderComponent() {
+    return <ScoreSaver
+            onSave={this._onScoreSaved.bind(this)}
+            score={this.props.score}/>;
   }
 
   _onScoreSaved() {
@@ -37,47 +96,8 @@ class Controls extends React.Component {
     this.setState(defaultState);
   }
 
-  _defineRenderComponent() {
-    if (this.state.menu) {
-      this._renderComponent = this._buildMenuRenderComponent();
-    } else if (this.state.save_score) {
-      this._renderComponent = this._buildSaveScoreRenderComponent();
-    }
-  }
-
-  _buildMenuRenderComponent() {
-    return (
-      <div className="d-flex flex-column">
-        <ControlButton action={this.props.startNewGameAction}
-          className="mb-3 align-self-center">
-            Start new game
-        </ControlButton>
-        <div className="d-flex">
-          <ControlButton
-            disabled={this._scoreSaved}
-            action={this._renderSaveScore.bind(this)}>
-            Save this score
-          </ControlButton>
-          <ControlButton className="ml-3">View scoreboard</ControlButton>
-        </div>
-    </div>
-    );
-  }
-
-  _buildSaveScoreRenderComponent() {
-    return <ScoreSaver
-            onSave={this._onScoreSaved.bind(this)}
-            score={this.props.score}/>;
-  }
-
-  render() {
-    this._defineRenderComponent();
-
-    return (
-      <div className={this.props.className}>
-        {this._renderComponent}
-      </div>
-    )
+  _buildScoreBoard() {
+    return <Board/>;
   }
 }
 

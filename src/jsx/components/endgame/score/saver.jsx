@@ -38,7 +38,14 @@ class ScoreSaver extends React.Component {
       });
 
       if (response.ok) {
-        that.props.onSave();
+        /*
+          Возврат либо объекта со статусом success,
+          либо пустого объекта.
+         */
+        const result = await response.json();
+        if (result.status) {
+          that.props.onSave();
+        }
       }
     })();
   }

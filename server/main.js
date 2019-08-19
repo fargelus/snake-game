@@ -28,3 +28,16 @@ app.post('/save_score', (req, res) => {
   }
   res.json(responsed);
 });
+
+app.get('/scoreboard', (req, res) => {
+  const allScores = scoreModel.getAllScores();
+  const withoutId = allScores.map((scoreItem) => {
+    const record = {};
+    const { name, score } = scoreItem;
+    record.name = name;
+    record.score = score;
+    return record;
+  });
+
+  res.json(withoutId);
+});
