@@ -1,9 +1,8 @@
 import Figure from './figure.js';
 
-
 class Snake extends Figure {
   constructor(settings) {
-    super(settings.x * 1.5, settings.y);
+    super(settings);
 
     this._shift = settings.shift;
     this._emitMove = settings.onMove;

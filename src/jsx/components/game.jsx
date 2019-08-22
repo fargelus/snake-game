@@ -40,7 +40,7 @@ class Game extends React.Component {
     this.state = {
       snake: this._snake.getAllCoords(),
       food: this._food.getAllCoords(),
-      over: true,
+      over: false,
     };
 
     this._snakeView;

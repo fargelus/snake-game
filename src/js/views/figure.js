@@ -1,12 +1,17 @@
 import Point from './point.js';
+import Randomizer from '../randomizer.js';
 
 
 class Figure {
-  constructor(x, y) {
+  constructor(settings) {
     this._body = [];
-    if (x && y) {
-      this._body = [ new Point(x, y) ];
-    }
+    this._randomizer = new Randomizer(settings);
+    this._createPoint();
+  }
+
+  _createPoint() {
+    const [x, y] = this._randomizer.randomize();
+    this._body = [ new Point(x, y) ];
   }
 
   getAllCoords() {
