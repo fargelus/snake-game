@@ -122,10 +122,7 @@ class Menu extends React.Component {
   _renderMenuComponent() {
     const defaultState = resetObjectVals(this.state, false);
     defaultState.menu = true;
-    this.setState({
-      hide_scores: false,
-      ...defaultState,
-    });
+    this.setState(defaultState);
   }
 
   _buildScoreBoard() {
