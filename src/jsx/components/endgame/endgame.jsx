@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { CSSTransition } from "react-transition-group";
 
 import '../../../styles/transition.css';
-import Controls from './controls.jsx';
+import Menu from './menu.jsx';
 
 
 const EndGame = (props) => {
@@ -25,19 +25,18 @@ const EndGame = (props) => {
                 unmountOnExit
                 appear
               >
-              <div className="d-flex flex-column justify-content-center align-items-center"
-                style={baseParentStyle}>
-                  <div style={{textTransform: 'uppercase'}}>Game Over!</div>
-                  <div>Your score is {props.score}</div>
-                  <Controls
+              <div style={baseParentStyle}
+                   className="d-flex align-items-center justify-content-center">
+                  <Menu
                     score={props.score}
                     startNewGameAction={props.onStartNewGame}
-                    className="controls mt-3" />
+                    className="d-flex flex-column justify-content-center align-items-center"
+                    />
                 </div>
           </CSSTransition>
         </div>
-        );
-};
+  );
+}
 
 EndGame.propTypes = {
   score: PropTypes.number.isRequired,
