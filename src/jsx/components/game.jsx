@@ -6,6 +6,7 @@ import EndGame from './endgame/endgame.jsx';
 import Snake from '../../js/views/snake.js';
 import Food from '../../js/views/food.js';
 import Rules from '../../js/rules.js';
+import { MOVE_DIRECTION } from '../../js/utils.js';
 
 
 class Game extends React.Component {
@@ -71,8 +72,9 @@ class Game extends React.Component {
 
   _initSnake() {
     const snakeSettings = {
-      x: this._width / 2,
-      y: this._height / 2,
+      width: this._width,
+      height: this._height,
+      cellSize: this._cellSize,
       shift: this._cellSize,
       onMove: this._snakeWasUpdated,
     };
@@ -142,6 +144,41 @@ class Game extends React.Component {
       cellSize: this._cellSize,
       views: this._views,
     };
+  }
+
+  componentDidMount() {
+    this._snakeFirstCoords = this._snake.getFirstCoords();
+    this._foodFirstCoords = this._food.getFirstCoords();
+    this._runSnake();
+  }
+
+  _runSnake() {
+    if (this._snakeFirstCoords.x !== this._foodFirstCoords.x) {
+      this._runSnakeHorizontally();
+    } else {
+      /* В 99.9% случаев не вызывается */
+      this._runSnakeVertically();
+    }
+  }
+
+  _runSnakeHorizontally() {
+    const { left, right } = MOVE_DIRECTION;
+
+    if (this._snakeFirstCoords.x < this._foodFirstCoords.x) {
+      this._snake.startMove(right);
+    } else {
+      this._snake.startMove(left);
+    }
+  }
+
+  _runSnakeVertically() {
+    const { top, bottom } = MOVE_DIRECTION;
+
+    if (this._snakeFirstCoords.y < this._foodFirstCoords.y) {
+      this._snake.startMove(bottom);
+    } else {
+      this._snake.startMove(top);
+    }
   }
 
   shouldComponentUpdate(_, nextState) {

@@ -1,4 +1,5 @@
 import Figure from './figure.js';
+import { MOVE_DIRECTION, OPPOSITE_DIRECTION } from '../utils.js';
 
 class Snake extends Figure {
   constructor(settings) {
@@ -11,6 +12,11 @@ class Snake extends Figure {
 
     this._handleKeyDown();
     this._moveIntervalID;
+  }
+
+  startMove(direction) {
+    this._moveDirection = direction;
+    this._turn();
   }
 
   feed() {
@@ -49,11 +55,12 @@ class Snake extends Figure {
   }
 
   _defineMoveDirection(e) {
+    const { left, top, right, bottom } = MOVE_DIRECTION;
     const arrowCodesToDirection = {
-      37: 'left',
-      38: 'up',
-      39: 'right',
-      40: 'down',
+      37: left,
+      38: top,
+      39: right,
+      40: bottom,
     };
     const arrowCodes = Object.keys(arrowCodesToDirection);
 
@@ -94,33 +101,27 @@ class Snake extends Figure {
   }
 
   _notOppositeDirection(direction) {
-    const oppositeDirections = {
-      left: 'right',
-      up: 'down',
-      right: 'left',
-      down: 'up',
-    };
-
-    if (this._moveDirection in oppositeDirections) {
-      const oppositeDirection = oppositeDirections[this._moveDirection];
-      return direction !== oppositeDirection;
+    if (this._moveDirection in OPPOSITE_DIRECTION) {
+      return direction !== OPPOSITE_DIRECTION[this._moveDirection];
     }
 
     return true;
   }
 
+
   _turn() {
+    const { left, top, right, bottom } = MOVE_DIRECTION;
     switch (this._moveDirection) {
-      case 'left':
+      case left:
         this._moveLeft();
         break;
-      case 'up':
+      case top:
         this._moveUp();
         break;
-      case 'right':
+      case right:
         this._moveRight();
         break;
-      case 'down':
+      case bottom:
         this._moveDown();
         break;
       default:
