@@ -22,23 +22,24 @@ class Snake extends Figure {
   feed() {
     const lastCoords = this.getAllCoords().slice(-1)[0];
     const newCoords = {};
+    const { left, top, right, bottom } = MOVE_DIRECTION;
     switch (this._moveDirection) {
-      case 'left':
+      case left:
         newCoords.x = lastCoords.x + this._shift;
         newCoords.y = lastCoords.y;
         break;
 
-      case 'right':
+      case right:
         newCoords.x = lastCoords.x - this._shift;
         newCoords.y = lastCoords.y;
         break;
 
-      case 'up':
+      case top:
         newCoords.x = lastCoords.x;
         newCoords.y = lastCoords.y + this._shift;
         break;
 
-      case 'down':
+      case bottom:
         newCoords.x = lastCoords.x;
         newCoords.y = lastCoords.y - this._shift;
         break;

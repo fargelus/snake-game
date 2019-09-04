@@ -121,6 +121,8 @@ class Game extends React.Component {
       snake: this._snake,
     });
     this._refreshGrid();
+
+    this._runSnake();
   }
 
   _initViews() {
@@ -147,12 +149,12 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    this._snakeFirstCoords = this._snake.getFirstCoords();
-    this._foodFirstCoords = this._food.getFirstCoords();
     this._runSnake();
   }
 
   _runSnake() {
+    this._snakeFirstCoords = this._snake.getFirstCoords();
+    this._foodFirstCoords = this._food.getFirstCoords();
     if (this._snakeFirstCoords.x !== this._foodFirstCoords.x) {
       this._runSnakeHorizontally();
     } else {

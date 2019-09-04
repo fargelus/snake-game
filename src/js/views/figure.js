@@ -6,10 +6,10 @@ class Figure {
   constructor(settings) {
     this._body = [];
     this._randomizer = new Randomizer(settings);
-    this._createPoint();
+    this._initFigure();
   }
 
-  _createPoint() {
+  _initFigure() {
     const [x, y] = this._randomizer.randomize();
     this._body = [ new Point(x, y) ];
   }

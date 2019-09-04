@@ -6,9 +6,7 @@ class Food extends Figure {
   }
 
   replace() {
-    const [x, y] = this._randomizeConsiderLimit();
-    const coords = {x, y};
-    this._updateFirstCoords(coords);
+    this._initFigure();
   }
 }
 
