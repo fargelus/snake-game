@@ -1,7 +1,7 @@
 {
-  "name": "react-samples",
-  "version": "1.0.0",
-  "description": "Simple react apps for learning",
+  "name": "Snake: The Game",
+  "version": "1.0.1",
+  "description": "Snake Game React App",
   "scripts": {
     "clean": "rm -rf public",
     "static": "npm run clean && node_modules/.bin/webpack",
