@@ -1,5 +1,5 @@
 {
-  "name": "Snake: The Game",
+  "name": "snake",
   "version": "1.0.1",
   "description": "Snake Game React App",
   "scripts": {

@@ -58,6 +58,8 @@ class Game extends React.Component {
       left: '50%',
       transform: 'translate(-50%, -50%)',
     };
+
+    this._startNewGame = this._startNewGame.bind(this);
   }
 
   _initFood() {
@@ -194,7 +196,7 @@ class Game extends React.Component {
       <section style={this._style}>
         <Grid {...this._gridProps}/>
         <EndGame init={this.state.over}
-                 onStartNewGame={this._startNewGame.bind(this)}
+                 onStartNewGame={this._startNewGame}
                  score={this._score}>
         </EndGame>
       </section>
