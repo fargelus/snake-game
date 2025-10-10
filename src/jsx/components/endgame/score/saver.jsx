@@ -66,12 +66,12 @@ class ScoreSaver extends React.Component {
                  style={{height: 'auto'}}
                  className="form-control"
                  required
-                 placeholder="Введите Ваше имя"
+                 placeholder="Enter your nams"
                  onChange={this._handleUsernameChange}
                  value={this.state.username}/>
           <div className="input-group-append">
             <ControlButton className="ml-2">
-              Сохранить
+              Save
             </ControlButton>
           </div>
         </div>

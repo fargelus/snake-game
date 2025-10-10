@@ -8,10 +8,15 @@ module.exports = {
   entry: ['babel-polyfill', './src/jsx/app.jsx'],
 
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
     port: 8080,
-    watchContentBase: true,
-    writeToDisk: true,
+    hot: true,
+    static: {
+      directory: path.join(__dirname, 'public'),
+      watch: true,
+    },
+    devMiddleware: {
+      writeToDisk: true,
+    },
   },
 
   resolve: {
