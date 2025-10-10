@@ -1,10 +1,7 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  target: 'node',
-
   entry: ['babel-polyfill', './src/jsx/app.jsx'],
 
   devServer: {
@@ -25,8 +22,8 @@ module.exports = {
 
   output: {
     filename: 'app.bundle.js',
-    publicPath: path.resolve(__dirname, 'public'),
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'public'), // куда Webpack будет складывать bundle
+    publicPath: '/', // путь для Dev Server
   },
 
   optimization: {
@@ -56,11 +53,4 @@ module.exports = {
       },
     ],
   },
-
-  plugins: [
-    new CopyWebpackPlugin([{
-      from: './index.html',
-      to: '.',
-    }])
-  ],
 };

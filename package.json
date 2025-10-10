@@ -4,17 +4,13 @@
   "description": "Snake Game React App",
   "scripts": {
     "clean": "rm -rf public",
-    "build": "npm run clean && node_modules/.bin/webpack",
-    "server": "nodemon -L server/main.js",
+    "build": "yarn run clean && node_modules/.bin/webpack",
     "dev": "node_modules/.bin/webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "fargelus",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "mongodb": "^3.3.0-beta2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
@@ -25,7 +21,6 @@
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
     "babel-polyfill": "^6.26.0",
-    "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
     "eslint": "^6.0.1",
     "eslint-plugin-react": "^7.14.2",

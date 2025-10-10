@@ -23,31 +23,7 @@ class ScoreSaver extends React.Component {
   }
 
   _sendSubmitRequest(ev) {
-    ev.preventDefault();
-    if (!this.state.username) return;
-
-    const sendData = this._makeSendData();
-    const that = this;
-    (async () => {
-      const response = await fetch('/save_score', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: sendData,
-      });
-
-      if (response.ok) {
-        /*
-          Возврат либо объекта со статусом success,
-          либо пустого объекта.
-         */
-        const result = await response.json();
-        if (result.status) {
-          that.props.onSave();
-        }
-      }
-    })();
+    console.log("saver.jsx _sendSubmitRequest implement me");
   }
 
   _makeSendData() {
@@ -66,7 +42,7 @@ class ScoreSaver extends React.Component {
                  style={{height: 'auto'}}
                  className="form-control"
                  required
-                 placeholder="Enter your nams"
+                 placeholder="Enter your name"
                  onChange={this._handleUsernameChange}
                  value={this.state.username}/>
           <div className="input-group-append">
