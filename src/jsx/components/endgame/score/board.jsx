@@ -14,17 +14,11 @@ class Board extends React.Component {
   }
 
   _fetchRecords() {
-    console.log("board.jsx _fetchRecords implement me");
-    // const that = this;
-  
-    // (async () => {
-    //   const response = await fetch('/scoreboard');
-    //   const data = await response.json();
-    //   that._records = data;
-    //   that.setState({
-    //     get_records: true,
-    //   });
-    // })();
+    const scoreBoard = localStorage.getItem('snake-game:score:board') || '[]';
+    this._records = JSON.parse(scoreBoard);
+    this.setState({
+      get_records: true
+    });
   }
 
   _sortRecords() {

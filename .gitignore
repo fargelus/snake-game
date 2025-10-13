@@ -1,2 +1,4 @@
 /node_modules/
 TODO.md
+public/dist/*
+!public/dist/app.bundle.js
