@@ -1,61 +1,52 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  target: 'node',
-
-  entry: ['babel-polyfill', './src/jsx/app.jsx'],
-
-  devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    port: 8080,
-    watchContentBase: true,
-    writeToDisk: true,
-  },
-
-  resolve: {
-    extensions: ['.js', '.jsx', '.css']
-  },
-
+  entry: ['core-js/stable', 'regenerator-runtime/runtime', './src/jsx/app.jsx'],
+  
   output: {
     filename: 'app.bundle.js',
-    publicPath: path.resolve(__dirname, 'public'),
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'public/dist'),
+    publicPath: '/',
   },
-
-  optimization: {
-    minimize: true,
+  
+  resolve: {
+    extensions: ['.js', '.jsx', '.css'],
   },
-
-  devtool: 'source-map',
-
+  
   module: {
     rules: [
       {
-        test: /\.jsx?/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
       {
-        test: /\.css$/,
+        test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
-        loader: 'file-loader',
-        options: {
-          publicPath: '/',
-          name: '[name].[ext]',
-        },
+        test: /\.(png|svg|jpg|gif)$/i,
+        type: 'asset/resource',
       },
     ],
   },
-
-  plugins: [
-    new CopyWebpackPlugin([{
-      from: './index.html',
-      to: '.',
-    }])
-  ],
+  
+  devServer: {
+    port: 8080,
+    static: {
+      directory: path.join(__dirname, 'public'),
+      watch: true,
+    },
+    devMiddleware: {
+      writeToDisk: true,
+    },
+    open: true,
+    historyApiFallback: true,
+  },
+  
+  devtool: 'source-map',
+  optimization: {
+    minimize: true,
+  },
 };

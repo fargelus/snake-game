@@ -13,7 +13,7 @@ class ScoreSaver extends React.Component {
     };
 
     this._handleUsernameChange = this._handleUsernameChange.bind(this);
-    this._sendSubmitRequest = this._sendSubmitRequest.bind(this);
+    this._save = this._save.bind(this);
   }
 
   _handleUsernameChange(ev) {
@@ -22,56 +22,34 @@ class ScoreSaver extends React.Component {
     });
   }
 
-  _sendSubmitRequest(ev) {
+  _save(ev) {
     ev.preventDefault();
     if (!this.state.username) return;
-
-    const sendData = this._makeSendData();
-    const that = this;
-    (async () => {
-      const response = await fetch('/save_score', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: sendData,
-      });
-
-      if (response.ok) {
-        /*
-          Возврат либо объекта со статусом success,
-          либо пустого объекта.
-         */
-        const result = await response.json();
-        if (result.status) {
-          that.props.onSave();
-        }
-      }
-    })();
-  }
-
-  _makeSendData() {
-    const sendData = {
+    
+    const currentScore = {
       name: this.state.username,
       score: this.props.score,
     };
-    return JSON.stringify(sendData);
+    const scores = JSON.parse(localStorage.getItem('snake-game:score:board') || '[]');
+    scores.push(currentScore);
+    localStorage.setItem('snake-game:score:board', JSON.stringify(scores));
+    this.props.onSave();
   }
 
   render() {
     return (
-      <form method="post" name="save_score" onSubmit={this._sendSubmitRequest}>
+      <form method="post" name="save_score" onSubmit={this._save}>
         <div className="input-group">
           <input type="text"
                  style={{height: 'auto'}}
                  className="form-control"
                  required
-                 placeholder="Введите Ваше имя"
+                 placeholder="Enter your name"
                  onChange={this._handleUsernameChange}
                  value={this.state.username}/>
           <div className="input-group-append">
             <ControlButton className="ml-2">
-              Сохранить
+              Save
             </ControlButton>
           </div>
         </div>
